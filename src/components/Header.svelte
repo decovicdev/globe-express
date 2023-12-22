@@ -39,6 +39,8 @@
 		align-items: center;
 		justify-content: space-between;
 		color: white;
+		background: rgba(0, 0, 0, 0.001);
+		backdrop-filter: blur(4px);
 	}
 
 	nav {
@@ -57,6 +59,6 @@
 	.menu-container {
 		display: flex;
 		align-items: center;
-		gap: 1 rem;
+		gap: 1rem;
 	}
 </style>
