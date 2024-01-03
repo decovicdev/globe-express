@@ -2,8 +2,29 @@
 	import ChevronLeft from '../assets/icons/ChevronLeft.svelte';
 	import ChevronRight from '../assets/icons/ChevronRight.svelte';
 
-	export let page = 0;
-	export let onPageChange = (page: number) => {};
+	interface PropTypes {
+		page: number;
+		onPageChange: (page: number) => void;
+	}
+
+	let { page = 0, onPageChange } = $props<PropTypes>();
+
+	$effect(() => {
+		const handleKeyboard = (e: KeyboardEvent) => {
+			if (e.key === 'ArrowLeft') {
+				onPageChange(page - 1);
+				e.preventDefault();
+			}
+			if (e.key === 'ArrowRight') {
+				onPageChange(page + 1);
+				e.preventDefault();
+			}
+		};
+
+		window.addEventListener('keyup', handleKeyboard);
+
+		return () => window.removeEventListener('keyup', handleKeyboard);
+	});
 </script>
 
 <div class="flex gap-5 items-center my-8 mr-10">
