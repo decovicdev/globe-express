@@ -4,10 +4,11 @@
 
 	interface PropTypes {
 		page: number;
+		totalPages: number;
 		onPageChange: (page: number) => void;
 	}
 
-	let { page = 0, onPageChange } = $props<PropTypes>();
+	let { page = 0, onPageChange, totalPages } = $props<PropTypes>();
 
 	$effect(() => {
 		const handleKeyboard = (e: KeyboardEvent) => {
@@ -41,10 +42,27 @@
 		<ChevronRight />
 	</button>
 
-	<hr class="border border-white/50 flex-1" />
+	<div
+		class="line border border-white/50 flex-1 relative"
+		style="--data-percent: {page / totalPages}"
+	/>
 
 	<p class="text-6xl">
-		<!-- 01 -->
 		{(page + 1).toString().padStart(2, '0')}
 	</p>
 </div>
+
+<style scoped>
+	.line::after {
+		content: '';
+		position: absolute;
+		border-radius: 8px;
+		top: 1/2;
+		left: 0;
+		transform: translateY(-50%);
+		transition: width 0.3s;
+		width: calc(var(--data-percent) * 100%);
+		height: 2px;
+		background-color: orange;
+	}
+</style>
