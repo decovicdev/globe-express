@@ -1,64 +1,74 @@
-<script>
-	import SearchIcon from '../icons/SearchIcon.svelte';
-	import UserIcon from '../icons/UserIcon.svelte';
+<script lang="ts">
+	import { Flip } from 'gsap/dist/Flip';
+	import { gsap } from 'gsap/dist/gsap';
+	import { tick } from 'svelte';
+
+	import SearchIcon from '../assets/icons/SearchIcon.svelte';
+	import UserIcon from '../assets/icons/UserIcon.svelte';
 	import Logo from './Logo.svelte';
+	import Menu from '../assets/icons/Menu.svelte';
+
+	let nav = $state<HTMLElement>();
+	let button = $state<HTMLElement>();
+	let flipState = $state<Flip.FlipState>();
 
 	const links = ['Home', 'Holidays', 'Destinations', 'Flights', 'Offers', 'Contacts'];
+	let activeIndex = $state(0);
+
+	// const state = Flip.getState(nav!);
+
+	function onClick(i: number) {
+		flipState = Flip.getState(nav!);
+		activeIndex = i;
+
+		// await tick();
+	}
+
+	$effect(() => {
+		gsap.registerPlugin(Flip);
+
+		if (flipState) {
+			Flip.from(flipState, {
+				// target: nav,
+				duration: 1,
+
+				target: '#line33',
+				scale: true,
+				ease: 'power4.inOut',
+				absolute: true
+			});
+		}
+	});
 </script>
 
-<header>
-	<nav>
+<header class="flex p-5 lg:p-10 items-center justify-between w-full absolute z-50 gap-4 text-white">
+	<nav class="flex items-center gap-4 uppercase">
 		<Logo />
-		<h4>GLOBE EXPRESS</h4>
+		<h4 class="font-bold">GLOBE EXPRESS</h4>
 	</nav>
 
-	<div class="nav-container">
-		<nav>
-			{#each links as link}
-				<p>
+	<div class="items-center gap-16 hidden lg:flex">
+		<nav class="flex items-start gap-6 text-xs" bind:this={nav}>
+			{#each links as link, i}
+				<button bind:this={button} onclick={() => onClick(i)} class="uppercase font-bold text-sm">
 					{link}
-				</p>
+					{#if i === activeIndex}
+						<div id="line33" class="h-1 bg-orange-300 mt-1 rounded-full" />
+					{/if}
+				</button>
 			{/each}
 		</nav>
 
-		<div class="menu-container">
+		<div class="flex items-center gap-8">
 			<SearchIcon />
 			<UserIcon />
 		</div>
 	</div>
+
+	<button class="lg:hidden">
+		<Menu />
+	</button>
 </header>
 
 <style>
-	header {
-		width: 100%;
-		padding: 1rem 2rem;
-		position: absolute;
-		z-index: 100;
-		display: flex;
-		gap: 0.5rem;
-		align-items: center;
-		justify-content: space-between;
-		color: white;
-		background: rgba(0, 0, 0, 0.001);
-		backdrop-filter: blur(4px);
-	}
-
-	nav {
-		display: flex;
-		align-items: center;
-		gap: 1rem;
-		text-transform: uppercase;
-	}
-
-	.nav-container {
-		display: flex;
-		align-items: center;
-		gap: 3rem;
-	}
-
-	.menu-container {
-		display: flex;
-		align-items: center;
-		gap: 1rem;
-	}
 </style>
