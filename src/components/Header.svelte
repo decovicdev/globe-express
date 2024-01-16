@@ -5,40 +5,30 @@
 
 	import SearchIcon from '../assets/icons/SearchIcon.svelte';
 	import UserIcon from '../assets/icons/UserIcon.svelte';
-	import Logo from './Logo.svelte';
 	import Menu from '../assets/icons/Menu.svelte';
+	import Logo from './Logo.svelte';
 
-	let nav = $state<HTMLElement>();
-	let button = $state<HTMLElement>();
-	let flipState = $state<Flip.FlipState>();
+	gsap.registerPlugin(Flip);
+
+	let lineElement = $state<HTMLElement>();
 
 	const links = ['Home', 'Holidays', 'Destinations', 'Flights', 'Offers', 'Contacts'];
 	let activeIndex = $state(0);
 
-	// const state = Flip.getState(nav!);
+	async function onClick(i: number) {
+		const flipState = Flip.getState(lineElement!);
 
-	function onClick(i: number) {
-		flipState = Flip.getState(nav!);
 		activeIndex = i;
 
-		// await tick();
+		await tick();
+
+		Flip.from(flipState, {
+			scale: true,
+			rotation: 90,
+			targets: lineElement,
+			absolute: true
+		});
 	}
-
-	$effect(() => {
-		gsap.registerPlugin(Flip);
-
-		if (flipState) {
-			Flip.from(flipState, {
-				// target: nav,
-				duration: 1,
-
-				target: '#line33',
-				scale: true,
-				ease: 'power4.inOut',
-				absolute: true
-			});
-		}
-	});
 </script>
 
 <header class="flex p-5 lg:p-10 items-center justify-between w-full absolute z-50 gap-4 text-white">
@@ -48,12 +38,17 @@
 	</nav>
 
 	<div class="items-center gap-16 hidden lg:flex">
-		<nav class="flex items-start gap-6 text-xs" bind:this={nav}>
+		<nav id="nav" class="flex items-start gap-6 text-xs">
 			{#each links as link, i}
-				<button bind:this={button} onclick={() => onClick(i)} class="uppercase font-bold text-sm">
+				<button id="button" onclick={() => onClick(i)} class="uppercase font-bold text-sm relative">
 					{link}
 					{#if i === activeIndex}
-						<div id="line33" class="h-1 bg-orange-300 mt-1 rounded-full" />
+						<div
+							bind:this={lineElement}
+							data-flip-id="active_line"
+							id="active_line"
+							class="h-1 bg-orange-300 mt-1 w-full rounded-full absolute"
+						/>
 					{/if}
 				</button>
 			{/each}
