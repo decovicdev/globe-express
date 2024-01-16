@@ -24,9 +24,8 @@
 
 		Flip.from(flipState, {
 			scale: true,
-			rotation: 90,
-			targets: lineElement,
-			absolute: true
+			absolute: true,
+			targets: lineElement
 		});
 	}
 </script>
@@ -44,9 +43,9 @@
 					{link}
 					{#if i === activeIndex}
 						<div
+							id="active_line"
 							bind:this={lineElement}
 							data-flip-id="active_line"
-							id="active_line"
 							class="h-1 bg-orange-300 mt-1 w-full rounded-full absolute"
 						/>
 					{/if}
