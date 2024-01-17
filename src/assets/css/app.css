@@ -1,3 +1,24 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	color: white;
+}
+
+img {
+	max-width: 100%;
+	display: block;
+}
+
+button {
+	outline: none;
+}
+
+button:active {
+	opacity: 0.8;
+}
