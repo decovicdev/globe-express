@@ -53,9 +53,14 @@
 			{/each}
 		</nav>
 
-		<div class="flex items-center gap-8">
-			<SearchIcon />
-			<UserIcon />
+		<div class="flex items-center gap-4">
+			<button aria-label="search">
+				<SearchIcon />
+			</button>
+
+			<button aria-label="user">
+				<UserIcon />
+			</button>
 		</div>
 	</div>
 
