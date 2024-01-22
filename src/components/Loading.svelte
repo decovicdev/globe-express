@@ -1,26 +1,28 @@
 <script lang="ts">
-	import { animate } from 'motion';
-	import { onMount } from 'svelte';
+	import { gsap } from 'gsap';
 
-	let loader: HTMLDivElement;
+	let loader = $state<HTMLDivElement>();
 
-	onMount(() => {
-		animate(loader, { left: [0, '100%'] }, { duration: 1 });
+	$effect(() => {
+		const timeline = gsap.timeline();
+
+		if (loader) {
+			timeline
+				.fromTo(loader, { x: '-100%' }, { x: '0%', ease: 'power1.in', duration: 1 })
+				.to(loader, { x: '100%', ease: 'power1', duration: 1, delay: 0.3 });
+		}
 	});
 </script>
 
-<div bind:this={loader} />
+<div class="loader" bind:this={loader} />
 
 <style>
-	div {
+	.loader {
 		width: 100vw;
 		height: 100vh;
-
 		top: 0;
+		z-index: 999;
 		position: fixed;
-		background-color: wheat;
-
-		display: grid;
-		place-content: center;
+		background-color: whitesmoke;
 	}
 </style>
