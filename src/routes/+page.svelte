@@ -182,9 +182,10 @@
 
 	$effect(() => {
 		gsap.defaults({ overwrite: true, ease: 'power1.in' });
-
 		q = gsap.utils.selector(container!);
+	});
 
+	$effect(() => {
 		gsap.fromTo(
 			q('#full_cover'),
 			{ scale: 1.5 },
