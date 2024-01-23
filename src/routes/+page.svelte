@@ -121,6 +121,8 @@
 					ease: 'power3'
 				}
 			);
+
+			gsap.fromTo(q('#page_number'), { x: '80%' }, { x: 0, duration: 0.2 });
 		} else {
 			gsap.set(q('#next_image'), {
 				opacity: 1,
@@ -166,6 +168,8 @@
 					});
 				}
 			});
+
+			gsap.fromTo(q('#page_number'), { x: '-80%' }, { x: 0, duration: 0.2, ease: 'power1.in' });
 		}
 
 		gsap.fromTo(
@@ -174,7 +178,7 @@
 			{
 				y: '0%',
 				opacity: 1,
-				stagger: 0.3,
+				stagger: 0.2,
 				clearProps: 'all'
 			}
 		);
@@ -214,7 +218,7 @@
 				y: '0%',
 				delay: 1.7,
 				opacity: 1,
-				stagger: 0.3,
+				stagger: 0.2,
 				clearProps: 'all'
 			}
 		);

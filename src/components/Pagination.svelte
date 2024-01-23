@@ -2,7 +2,6 @@
 	import gsap from 'gsap';
 	import ChevronLeft from '../assets/icons/ChevronLeft.svelte';
 	import ChevronRight from '../assets/icons/ChevronRight.svelte';
-	import { tick } from 'svelte';
 
 	interface PropTypes {
 		page: number;
@@ -11,18 +10,15 @@
 	}
 
 	let container = $state<HTMLElement>();
-	let pageNumber = $state<HTMLElement>();
 
 	let { page = 0, onPageChange, totalPages } = $props<PropTypes>();
 
 	const handleKeyboard = (e: KeyboardEvent) => {
 		if (e.key === 'ArrowLeft') {
 			onPageChange(page - 1);
-			e.preventDefault();
 		}
 		if (e.key === 'ArrowRight') {
 			onPageChange(page + 1);
-			e.preventDefault();
 		}
 	};
 
@@ -34,24 +30,6 @@
 
 	$effect(() => {
 		gsap.fromTo(container!, { y: 300 }, { y: 0, duration: 1, delay: 1.6 });
-	});
-
-	$effect.pre(() => {
-		if (!pageNumber) return;
-
-		// const state = Flip.getState(pageNumber);
-
-		const prev = page;
-
-		// gsap.fromTo(pageNumber!, { x: 0 }, { x: -100 });
-
-		tick().then(() => {
-			if (prev > page) {
-				gsap.fromTo(pageNumber!, { x: '-100%' }, { x: 0 });
-			} else {
-				gsap.fromTo(pageNumber!, { x: '100%' }, { x: 0 });
-			}
-		});
 	});
 </script>
 
@@ -75,15 +53,9 @@
 	/>
 
 	<div class="w-max overflow-hidden">
-		<!-- <h2 bind:this={pageNumber} class="absolute top-0 text-3xl lg:text-6xl">
-			{page.toString().padStart(2, '0')}
-		</h2> -->
-		<h2 bind:this={pageNumber} class="text-3xl lg:text-5xl">
+		<h2 id="page_number" class="text-4xl lg:text-5xl">
 			{(page + 1).toString().padStart(2, '0')}
 		</h2>
-		<!-- <h2 bind:this={pageNumber} class="absolute left-full top-0 text-3xl lg:text-6xl">
-			{(page + 2).toString().padStart(2, '0')}
-		</h2> -->
 	</div>
 </div>
 
