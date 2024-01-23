@@ -4,7 +4,11 @@ export default {
 	theme: {
 		extend: {
 			colors: {
-				primary: 'orange'
+				primary: 'rgb(var(--color-primary) / <alpha-value>)'
+			},
+			fontFamily: {
+				montserrat: ['var(--font-montserrat)'],
+				antonio: ['var(--font-antonio)']
 			}
 		}
 	},

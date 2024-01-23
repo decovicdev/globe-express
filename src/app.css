@@ -2,24 +2,43 @@
 @tailwind components;
 @tailwind utilities;
 
-* {
-	box-sizing: border-box;
+@layer base {
+	:root {
+		--color-primary: 255 165 0;
+		--font-antonio: 'Antonio Variable', sans-serif;
+		--font-montserrat: 'Montserrat Variable', sans-serif;
+	}
 }
 
-body {
-	color: white;
-	background-color: black;
-}
+@layer utilities {
+	* {
+		box-sizing: border-box;
+	}
 
-img {
-	max-width: 100%;
-	display: block;
-}
+	body {
+		color: white;
+		background-color: black;
+		font-family: theme('fontFamily.montserrat');
+	}
 
-button {
-	outline: none;
-}
+	img {
+		max-width: 100%;
+		display: block;
+	}
 
-button:active {
-	opacity: 0.8;
+	button {
+		outline: none;
+	}
+
+	button:active {
+		opacity: 0.8;
+	}
+
+	h1,
+	h2,
+	h3,
+	h4,
+	h5 {
+		font-family: theme('fontFamily.antonio');
+	}
 }
