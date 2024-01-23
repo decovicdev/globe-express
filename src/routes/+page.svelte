@@ -20,6 +20,7 @@
 	let currentPage = $state(0);
 
 	let container = $state<HTMLDivElement>();
+	let autoplayTL = $state<GSAPTimeline>();
 
 	let q = $state<gsap.utils.SelectorFunc>({} as gsap.utils.SelectorFunc);
 
@@ -91,13 +92,13 @@
 
 		await tick();
 
-		gsap.fromTo(
-			q(`#prev_image`),
-			{ opacity: 1, scale: 1 },
-			{ opacity: 0, scale: 1.3, duration: 0.4 }
-		);
-
 		if (dir === 'next') {
+			gsap.fromTo(
+				q(`#prev_image`),
+				{ opacity: 1, scale: 1 },
+				{ opacity: 0, scale: 1.3, duration: 0.4 }
+			);
+
 			gsap.set(q(`#preview_${locations.at(0)?.id}`).at(0)?.parentElement!, {
 				opacity: 1
 			});
@@ -127,16 +128,33 @@
 			gsap.set(q('#next_image'), {
 				opacity: 1,
 				top: 0,
-				position: 'absolute',
-				transform: 'none',
 				width: '100%',
 				height: '100%',
-				borderRadius: 0
+				borderRadius: 0,
+				transform: 'none'
 			});
 
 			gsap.set(q(`#preview_${locations.at(0)?.id}`).at(0)?.parentElement!, {
 				opacity: 0,
 				zIndex: 100
+			});
+
+			Flip.to(state, {
+				zIndex: 1,
+				delay: 0.4,
+				absolute: true,
+				targets: q(`#next_image`),
+				onComplete: () => {
+					gsap.to(q('#next_image'), {
+						opacity: 0,
+						delay: 0.4,
+						overwrite: false
+					});
+					gsap.to(q(`#preview_${locations.at(0)?.id}`).at(0)?.parentElement!, {
+						opacity: 1,
+						delay: 0.2
+					});
+				}
 			});
 
 			gsap.fromTo(
@@ -149,27 +167,7 @@
 				}
 			);
 
-			Flip.to(state, {
-				zIndex: 1,
-				delay: 0.4,
-				absolute: true,
-				borderRadius: 16,
-				targets: q(`#next_image`),
-				onComplete: () => {
-					gsap.to(q('#next_image'), {
-						opacity: 0,
-						delay: 0.4,
-						overwrite: false
-					});
-					gsap.to(q(`#preview_${locations.at(0)?.id}`).at(0)?.parentElement!, {
-						opacity: 1,
-						delay: 0.2,
-						overwrite: false
-					});
-				}
-			});
-
-			gsap.fromTo(q('#page_number'), { x: '-80%' }, { x: 0, duration: 0.2, ease: 'power1.in' });
+			gsap.fromTo(q('#page_number'), { x: '-80%' }, { x: 0, duration: 0.2 });
 		}
 
 		gsap.fromTo(
@@ -222,12 +220,33 @@
 				clearProps: 'all'
 			}
 		);
+
+		autoplayTL = gsap.timeline({ repeat: -1 });
+
+		autoplayTL
+			.delay(3)
+			.fromTo(
+				q('#autoplay'),
+				{
+					x: '-100%'
+				},
+				{ x: '0', duration: 4 }
+			)
+			.to(q('#autoplay'), {
+				x: '100%',
+				duration: 4,
+				onComplete() {
+					onPageChange(currentPage + 1);
+				}
+			});
 	});
 </script>
 
 <Loading />
 
 <div class="relative h-svh w-svw overflow-hidden" bind:this={container}>
+	<div id="autoplay" class="absolute left-0 top-0 z-40 h-1 w-full bg-primary" />
+
 	<div class="relative">
 		<img
 			id="next_image"
@@ -290,7 +309,7 @@
 
 		<div class="lg:0 max-w-4xl self-end overflow-hidden pl-4 lg:w-7/12">
 			<div class="flex gap-5" id="carousel">
-				{#each locations as location, i}
+				{#each locations as location}
 					<div class="relative block flex-shrink-0 rounded-xl shadow-xl shadow-black/25">
 						<img
 							src={location.img}
@@ -311,7 +330,7 @@
 					</div>
 				{/each}
 			</div>
-			<Pagination totalPages={locations.length} {onPageChange} page={currentPage} />
+			<Pagination {autoplayTL} totalPages={locations.length} {onPageChange} page={currentPage} />
 		</div>
 	</div>
 </div>
