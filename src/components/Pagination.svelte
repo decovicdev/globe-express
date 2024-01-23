@@ -6,14 +6,17 @@
 	interface PropTypes {
 		page: number;
 		totalPages: number;
+		autoplayTL?: GSAPTimeline;
 		onPageChange: (page: number) => void;
 	}
 
 	let container = $state<HTMLElement>();
 
-	let { page = 0, onPageChange, totalPages } = $props<PropTypes>();
+	let { page = 0, onPageChange, totalPages, autoplayTL } = $props<PropTypes>();
 
 	const handleKeyboard = (e: KeyboardEvent) => {
+		autoplayTL?.revert().restart(true);
+
 		if (e.key === 'ArrowLeft') {
 			onPageChange(page - 1);
 		}
