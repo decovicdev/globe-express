@@ -222,21 +222,21 @@
 
 <Loading />
 
-<div class="relative h-screen w-screen overflow-hidden" bind:this={container}>
+<div class="relative h-svh w-svw overflow-hidden" bind:this={container}>
 	<div class="relative">
 		<img
 			id="next_image"
 			src={locations.at(0)?.img}
 			alt={locations.at(0)?.title}
 			data-flip-id={`cover-${locations.at(1)?.id}`}
-			class="absolute top-0 -z-30 h-screen w-screen object-cover object-[20%] opacity-0 lg:object-center"
+			class="absolute top-0 -z-30 h-svh w-svw object-cover object-[20%] opacity-0 lg:object-center"
 		/>
 
 		<img
 			id="prev_image"
 			src={locations.at(-2)?.img}
 			alt={locations.at(-2)?.title}
-			class="absolute -z-20 h-screen w-screen object-cover object-[20%] lg:object-center"
+			class="absolute -z-20 h-svh w-svw object-cover object-[20%] lg:object-center"
 		/>
 
 		<img
@@ -244,7 +244,7 @@
 			src={locations.at(-1)?.img}
 			alt={locations.at(-1)?.title}
 			data-flip-id={`cover-${locations.at(-1)?.id}`}
-			class="-z-10 h-screen w-screen object-cover object-[20%] lg:object-center"
+			class="-z-10 h-svh w-svw object-cover object-[20%] lg:object-center"
 		/>
 		<div class="overlay" />
 	</div>
@@ -257,14 +257,17 @@
 
 			<p id="active_location" class="font-medium md:text-lg">{locations.at(-1)?.location}</p>
 
-			<p
+			<h2
 				id="active_title"
-				class="relative text-2xl font-bold tracking-tighter md:whitespace-pre md:text-7xl"
+				class="relative text-3xl font-bold !leading-[1.1] md:whitespace-pre md:text-8xl"
 			>
 				{locations.at(-1)?.title}
-			</p>
+			</h2>
 
-			<p id="active_description" class="relative text-center opacity-70 md:text-left">
+			<p
+				id="active_description"
+				class="relative text-center text-sm md:text-left lg:text-base lg:opacity-70"
+			>
 				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum quis quam totam quo aperiam
 				obcaecat.
 			</p>
@@ -292,13 +295,13 @@
 							class="h-[220px] w-[140px] rounded-2xl object-cover object-[20%] md:h-[320px] md:w-[220px]"
 						/>
 						<div
-							class="absolute bottom-2 grid w-full gap-1 bg-black/5 p-2 text-left backdrop-blur-[1px] md:bottom-5 md:gap-3 md:p-4"
+							class="absolute bottom-2 grid w-full gap-1 bg-black/5 p-2 text-left backdrop-blur-[1px] md:bottom-5 md:gap-2 md:p-4"
 						>
 							<div class="h-1 w-5 rounded-2xl bg-white" />
-							<p class="text-sm">{location.location}</p>
-							<p class="line-clamp-2 whitespace-pre-line font-bold leading-tight md:text-lg">
+							<p class="text-xs font-medium lg:text-sm">{location.location}</p>
+							<h2 class="line-clamp-2 whitespace-pre-line font-bold md:text-2xl">
 								{location.title}
-							</p>
+							</h2>
 						</div>
 					</div>
 				{/each}

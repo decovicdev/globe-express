@@ -2,6 +2,7 @@
 	import gsap from 'gsap';
 	import ChevronLeft from '../assets/icons/ChevronLeft.svelte';
 	import ChevronRight from '../assets/icons/ChevronRight.svelte';
+	import { tick } from 'svelte';
 
 	interface PropTypes {
 		page: number;
@@ -10,6 +11,7 @@
 	}
 
 	let container = $state<HTMLElement>();
+	let pageNumber = $state<HTMLElement>();
 
 	let { page = 0, onPageChange, totalPages } = $props<PropTypes>();
 
@@ -33,17 +35,35 @@
 	$effect(() => {
 		gsap.fromTo(container!, { y: 300 }, { y: 0, duration: 1, delay: 1.6 });
 	});
+
+	$effect.pre(() => {
+		if (!pageNumber) return;
+
+		// const state = Flip.getState(pageNumber);
+
+		const prev = page;
+
+		// gsap.fromTo(pageNumber!, { x: 0 }, { x: -100 });
+
+		tick().then(() => {
+			if (prev > page) {
+				gsap.fromTo(pageNumber!, { x: '-100%' }, { x: 0 });
+			} else {
+				gsap.fromTo(pageNumber!, { x: '100%' }, { x: 0 });
+			}
+		});
+	});
 </script>
 
 <div bind:this={container} class="my-8 mr-4 flex items-center gap-5 lg:mr-10">
 	<button
-		class="grid aspect-square h-10 place-content-center rounded-full border border-white/50 lg:h-16"
+		class="grid aspect-square h-11 place-content-center rounded-full border border-white/50 lg:h-16"
 		on:click={() => onPageChange(page - 1)}
 	>
 		<ChevronLeft />
 	</button>
 	<button
-		class="grid aspect-square h-10 place-content-center rounded-full border border-white/50 lg:h-16"
+		class="grid aspect-square h-11 place-content-center rounded-full border border-white/50 lg:h-16"
 		on:click={() => onPageChange(page + 1)}
 	>
 		<ChevronRight />
@@ -54,9 +74,17 @@
 		style="--data-percent: {page / totalPages}"
 	/>
 
-	<p class="text-3xl lg:text-6xl">
-		{(page + 1).toString().padStart(2, '0')}
-	</p>
+	<div class="w-max overflow-hidden">
+		<!-- <h2 bind:this={pageNumber} class="absolute top-0 text-3xl lg:text-6xl">
+			{page.toString().padStart(2, '0')}
+		</h2> -->
+		<h2 bind:this={pageNumber} class="text-3xl lg:text-5xl">
+			{(page + 1).toString().padStart(2, '0')}
+		</h2>
+		<!-- <h2 bind:this={pageNumber} class="absolute left-full top-0 text-3xl lg:text-6xl">
+			{(page + 2).toString().padStart(2, '0')}
+		</h2> -->
+	</div>
 </div>
 
 <style>

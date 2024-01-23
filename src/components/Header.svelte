@@ -60,7 +60,7 @@
 				<button
 					id="button"
 					on:click={() => onClick(i)}
-					class="relative text-sm font-bold uppercase"
+					class="relative text-xs font-bold uppercase"
 				>
 					{link}
 					{#if i === activeIndex}
@@ -68,7 +68,7 @@
 							id="active_line"
 							bind:this={lineElement}
 							data-flip-id="active_line"
-							class="absolute mt-1 h-1 w-full rounded-full bg-orange-300"
+							class="absolute mt-1 h-1 w-full rounded-full bg-primary"
 						/>
 					{/if}
 				</button>
