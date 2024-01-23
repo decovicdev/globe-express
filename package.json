@@ -34,6 +34,8 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@fontsource-variable/antonio": "^5.0.18",
+		"@fontsource-variable/montserrat": "^5.0.17",
 		"gsap": "^3.12.4",
 		"motion": "^10.17.0",
 		"svelte-eslint-parser": "0.34.0-next.6"
