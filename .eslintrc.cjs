@@ -29,6 +29,7 @@ module.exports = {
 		}
 	],
 	rules: {
-		'@typescript-eslint/no-non-null-asserted-optional-chain': 'off'
+		'@typescript-eslint/no-non-null-asserted-optional-chain': 'off',
+		'no-undef': 'off'
 	}
 };
