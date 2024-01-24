@@ -221,7 +221,9 @@
 			}
 		);
 
-		autoplayTL = gsap.timeline({ repeat: -1 });
+		if (!autoplayTL) {
+			autoplayTL = gsap.timeline({ repeat: -1 });
+		}
 
 		autoplayTL
 			.delay(3)
@@ -249,6 +251,7 @@
 
 	<div class="relative">
 		<img
+			loading="lazy"
 			id="next_image"
 			src={locations.at(0)?.img}
 			alt={locations.at(0)?.title}
@@ -257,6 +260,7 @@
 		/>
 
 		<img
+			loading="lazy"
 			id="prev_image"
 			src={locations.at(-2)?.img}
 			alt={locations.at(-2)?.title}
@@ -264,6 +268,7 @@
 		/>
 
 		<img
+			loading="eager"
 			id={`full_cover`}
 			src={locations.at(-1)?.img}
 			alt={locations.at(-1)?.title}
@@ -312,6 +317,7 @@
 				{#each locations as location}
 					<div class="relative block flex-shrink-0 rounded-xl shadow-xl shadow-black/25">
 						<img
+							loading="lazy"
 							src={location.img}
 							alt={location.title}
 							id={`preview_${location.id}`}

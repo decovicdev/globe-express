@@ -1,38 +1,51 @@
-# create-svelte
+# Globe Express
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
+A product landing page, from [Giulio Cuscito](https://dribbble.com/shots/11012652--Timed-Cards-Opening)'s design.
 
-## Creating a project
+#### Tech Stack
 
-If you're seeing this, you've probably already done this step. Congrats!
+- [SvelteKit](https://kit.svelte.dev/)
+- [TailwindCss](https://tailwindcss.com/)
+- [GSAP](https://gsap.com/)
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+## Getting Started for Development
 
-# create a new project in my-app
-npm create svelte@latest my-app
-```
+### Prerequisites
 
-## Developing
+- Node.js and Pnpm package manager
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+### Step 1: Install Dependencies
 
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
+Next, install the project dependencies. In the terminal, navigate to the project directory and run the following command:
 
 ```bash
-npm run build
+pnpm i
 ```
 
-You can preview the production build with `npm run preview`.
+This command will install the required dependencies for the project.
 
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+### Step 2: Start the Development Server
+
+Start the development server by running the following command:
+
+```bash
+pnpm dev
+```
+
+This command will start the server for the App.
+
+### Access the App
+
+Once the development server is running, you can access the app by opening http://localhost:5173 in your browser. You should see the application's user interface and be able to interact with it.
+
+### Step 3: Build
+
+Finally, To build all apps and packages, run the following command:
+
+```bash
+pnpm build
+```
+
+### License
+
+By contributing, you agree that your contributions will be licensed under its MIT License.

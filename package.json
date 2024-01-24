@@ -39,5 +39,21 @@
 		"gsap": "^3.12.4",
 		"motion": "^10.17.0",
 		"svelte-eslint-parser": "0.34.0-next.6"
+	},
+	"bugs": {
+		"url": "https://github.com/decovicdev/globe-express/issues"
+	},
+	"author": "Dev Hunter ('https://github.com/decovicdev/')",
+	"keywords": [
+		"gsap",
+		"svelte",
+		"tailwindcss",
+		"globe express"
+	],
+	"license": "MIT",
+	"engines": {
+		"pnpm": ">= 7.0.0",
+		"yarn": "Please use pnpm instead of yarn.",
+		"npm": "Please use pnpm instead of npm."
 	}
 }
